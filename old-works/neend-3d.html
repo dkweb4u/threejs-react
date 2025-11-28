@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            width: 100%;
+            font-size: 120px;
+            position: relative;
+        }
+        .ar-model-container {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+           .ar-model-container model-viewer {
+            width: 100%;
+            height: 100%;
+           }
+    </style>
+</head>
+<body>
+    <h2>Hello World</h2>
+    		<div class="ar-model-container" >
+				<div class="close"></div>
+				<div class="search"></div>
+				<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
+				</script>
+				<model-viewer 
+  src="Drilled-Air-cool-Dual-Comfort.glb" 
+  ar 
+  ar-modes="scene-viewer webxr quick-look" 
+  camera-controls 
+  auto-rotate 
+  shadow-intensity="1"
+  exposure="1">
+</model-viewer>
+			</div>
+</body>
+</html>
