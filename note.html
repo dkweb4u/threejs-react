@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steps of Three Js</title>
+</head>
+<body>
+    <h1>Create React Project</h1>
+    <h4>Install Dependices</h4>
+    <p>> npm i three @react-three/fiber @react-three/drei</p>
+    <hr>
+    <h4>Hero Component</h4>
+    <p>Create canvas Tag</p>
+    <pre>
+        import { Canvas } from '@react-three/fiber'
+         <Canvas>
+            
+        </Canvas>
+    </pre>
+    <p>Camera</p>
+    <pre>
+        import { PerspectiveCamera } from '@react-three/drei'
+        <PerspectiveCamera makeDefault position={[0,0,30]} />
+    </pre>
+    <hr>
+    <h4>Get 3d model Sketchfab</h4>
+    <p>Download gltf format</p>
+    <p>Convert gltf -> react three fiber</p>
+    <a href="https://gltf.pmnd.rs/">Link for converter</a>
+    <p><b>Note:</b> drop files with texture folder</p>
+    <p>Its give react code => export => copy clipboard</p>
+    <hr>
+    <h4>Create Componet (HackerRoom)</h4>
+    <p>paste the return value, props, import those things</p>
+    <hr>
+    <h4> inside canvas tag  add suspence</h4>
+    <pre>
+        import { Suspense } from 'react'
+         <Suspense fallback={null}></Suspense>
+    </pre>
+    <hr>
+    <h4>Create One more component CanvasLoader</h4>
+    <p>Import Html for @react-three/drei</p>
+    <pre>
+        import { Html } from "@react-three/drei"
+        
+        <Html> </Html>
+   
+    </pre>
+
+    <hr>
+    <h4> Update the code like below component</h4>
+    <pre>
+import { Html, useProgress } from "@react-three/drei"
+
+const CanvasLoader = () => {
+    const {progress} = useProgress()
+  return (
+    <Html as="div" style={{
+        display:"flex",
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection: 'column'
+    }}>
+    <span className="canvas-loader"></span>
+    <p style={{fontSize: '14px',color: '#f1f1f1',fontWeight:800,marginTop:40}}>
+        {progress !== 0 ? `${progress.toFixed(2)}%` : 'Loading...'}
+    </p>
+    </Html>
+  )
+}
+
+export default CanvasLoader
+    </pre>
+
+    <h4>After Update Suspense tag inside all and fallback = {canvasLoader}</h4>
+    <pre>
+          <Canvas>
+            <Suspense fallback={<CanvasLoader />}>
+            <PerspectiveCamera makeDefault position={[0,0,30]} />
+            </Suspense>
+           </Canvas>
+    </pre>
+
+    <hr>
+    <h4>Hero Section Update below values</h4>
+    <p>Import Object component (HackerRoom)</p>
+    <pre>
+            <Canvas>
+            <Suspense fallback={<CanvasLoader />}>
+            <PerspectiveCamera makeDefault position={[0,0,30]} />
+            <HackerRoom scale={0.05} position={[0,0,0]} rotation={[0, 280,0]} />
+            <ambientLight intensity={1}/>
+            <directionalLight position={[10,10,10]} intensity={0.5} />
+            </Suspense>
+           </Canvas>
+    </pre>
+
+    <hr>
+    <h4>Install Controler of 3d model => leva</h4>
+    <p>> npm i leva</p>
+     <pre>
+        import { Leva } from 'leva'
+           <Leva />
+     </pre>
+
+     <hr>
+     <h4>React Responsive</h4>
+     <p> > npm i react-responsive</p>
+
+     <pre>
+import { useMediaQuery } from 'react-responsive'
+
+   const isMobile = useMediaQuery({maxWidth: 440});
+  const isTablet = useMediaQuery({minWidth: 768, maxWidth: 1024});
+  const isDesktop = useMediaQuery({maxWidth: 440});
+     </pre>
+
+     <hr>
+     <h2>Camera postion Change in dynamic</h2>
+     <p>Create Camera Component (HeroCamera)</p>
+     <p>This component wrap into object like (HackerRoom)</p>
+     <pre>
+          <HeroCamera>
+                        <HackerRoom />
+          </HeroCamera>
+     </pre>
+     <h4>HeroCamera component</h4>
+     <p>add one Dependices</p>
+     <p> > npm i maath</p>
+     <p>easing.damp3 and dampE to move the angle</p>
+     <pre>
+import { useFrame } from '@react-three/fiber';
+import { easing } from 'maath';
+import React, { useRef } from 'react'
+
+const HeroCamera = ({children}) => {
+
+    const groupref = useRef(null);
+
+    useFrame((state,delta) =>{
+        // damp3(state.camera.position,targetValues, speed, delta)
+      easing.damp3(state.camera.position,[0,0,25], 0.25, delta);
+    easing.dampE(groupref.current.rotation,[-state.pointer.y / 3, -state.pointer.x / 5, 0], 0.25,delta)
+    });
+
+  return (
+   <group ref={groupref}>
+    {children}
+   </group>
+  )
+}
+
+export default HeroCamera
+     </pre>
+
+</body>
+</html>
