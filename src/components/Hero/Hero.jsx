@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import './Hero.css'
-import { PerspectiveCamera } from '@react-three/drei'
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
 import { Suspense } from 'react'
 import CanvasLoader from '../CanvasLoader/CanvasLoader'
 import HackerRoom from '../HackerRoom/HackerRoom'
@@ -73,6 +73,7 @@ const Hero = () => {
             //  rotation={[controls.rotationX,controls.rotationY,controls.rotationZ]}
 
             />
+           
            </HeroCamera>
 
             <group>
@@ -83,6 +84,7 @@ const Hero = () => {
             <ambientLight intensity={1}/>
             <directionalLight position={[10,10,10]} intensity={0.5} />
             </Suspense>
+             <OrbitControls enableZoom={false}/>
            </Canvas>
      </div>
    
